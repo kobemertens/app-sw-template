@@ -7,7 +7,6 @@ import { firefoxCursorFix } from '@lblod/ember-rdfa-editor/plugins/firefox-curso
 import { lastKeyPressedPlugin } from '@lblod/ember-rdfa-editor/plugins/last-key-pressed';
 import { chromeHacksPlugin } from '@lblod/ember-rdfa-editor/plugins/chrome-hacks-plugin';
 
-import recreateUuidsOnPaste from '@lblod/ember-rdfa-editor-lblod-plugins/plugins/variable-plugin/recreateUuidsOnPaste';
 import { Schema } from '@lblod/ember-rdfa-editor';
 import {
   em,
@@ -163,8 +162,6 @@ export default class SayEditorComponent extends Component {
       chromeHacksPlugin(),
       //(this.args.shouldEditRdfa || this.args.shouldShowRdfa) &&
       //  editableNodePlugin()
-
-      recreateUuidsOnPaste,
     ];
   }
 
@@ -190,7 +187,8 @@ export default class SayEditorComponent extends Component {
   // serializing, those get transformed into their static representation.
   //
   // all properties on a controller are tracked, so this integrates into ember
-  // like you would expect
+  // like you would expect. To showcase this, I've simply rendered this content
+  // below the editor, you'll get a live view of what html it generates
   get content() {
     // you always have to check for existence, as the controller only exists
     // after the editor loads.
@@ -198,9 +196,6 @@ export default class SayEditorComponent extends Component {
       return this.controller.htmlContent;
     }
     return '';
-  }
-  get safeHtmlContent() {
-    return htmlSafe(this.content);
   }
 
   // and this is how you load content into the editor (this will fully replace
