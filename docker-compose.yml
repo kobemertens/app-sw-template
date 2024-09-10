@@ -25,6 +25,8 @@ services:
     image: semtech/mu-migrations-service:0.9.0
     volumes:
       - ./config/migrations:/data/migrations
+    links:
+      - triplestore:database
     labels:
       - "logging=true"
   delta-notifier:
@@ -33,6 +35,7 @@ services:
       - ./config/delta:/config/
     labels:
       - "logging=true"
+
   database:
     image: semtech/sparql-parser:0.0.8
     volumes:
@@ -40,6 +43,17 @@ services:
       - ./data/authorization/:/data/
     labels:
       - "logging=true"
+  # +----------------------------------------------+
+  # | Uncomment if you want to use the old mu-auth |
+  # +----------------------------------------------+
+  # database:
+  #   image: semtech/mu-authorization:0.6.0-beta.5
+  #   environment:
+  #     MU_SPARQL_ENDPOINT: "http://triplestore:8890/sparql"
+  #   volumes:
+  #     - ./config/old-authorization:/config
+  #   labels:
+  #     - "logging=true"
   triplestore:
     image: redpencil/virtuoso:1.2.0-rc.1
     environment:
